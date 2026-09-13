@@ -174,8 +174,16 @@ def xor_crypt(text:str, pwd:str):
 class MultiFileCryptoGUI:
     def __init__(self,root):
         self.root = root
-        self.root.title("多格式文件加密神器｜支持手动输入文本+进度条")
-        self.root.geometry("980x700")
+        self.root.title("PassKey 多格式文件加密工具")
+        self.root.geometry("1020x740")
+        self.root.resizable(True,True)
+        # 全局深色主题配色
+        bg_color = "#1e2228"
+        frame_bg = "#2b3038"
+        text_bg = "#111418"
+        text_fg = "#c9d1d9"
+        self.root.configure(bg=bg_color)
+
         self.file_raw_data = None
         self.file_format = "txt"  # 默认手动输入为txt格式
         self.cipher_hex = ""
@@ -183,34 +191,50 @@ class MultiFileCryptoGUI:
         self.decrypted_data = None
         self.in_working = False
 
+        # 自定义按钮样式
+        style = ttk.Style()
+        style.configure("TButton", font=("Microsoft YaHei", 10), padding=4)
+        style.configure("Primary.TButton", background="#238636", foreground="white")
+        style.configure("Warning.TButton", background="#da3633", foreground="white")
+        style.configure("Info.TButton", background="#388bdd", foreground="white")
+        style.configure("TFrame", background=frame_bg)
+        style.configure("TLabel", background=bg_color, foreground="#adbac7", font=("Microsoft YaHei",9))
+        style.configure("Status.TLabel", background=bg_color, font=("Microsoft YaHei",10, "bold"))
+        # 进度条美化
+        style.configure("Custom.Horizontal.TProgressbar", troughcolor="#343a42", background="#2ea043")
+
         # 顶部按钮区
-        frame_top = tk.Frame(root)
-        frame_top.pack(pady=8)
-        tk.Button(frame_top,text="📂导入原始文件(拖拽支持)",command=self.load_file).grid(row=0,column=0,padx=3)
-        tk.Button(frame_top,text="🔒加密文件/文本",command=self.start_encrypt_thread).grid(row=0,column=1,padx=3)
-        tk.Button(frame_top,text="🔓解密(密文txt+密钥txt)",command=self.start_decrypt_thread).grid(row=0,column=2,padx=3)
-        tk.Button(frame_top,text="💾导出密文txt",command=self.save_cipher).grid(row=0,column=3,padx=3)
-        tk.Button(frame_top,text="🔑导出密钥txt",command=self.save_key).grid(row=0,column=4,padx=3)
-        tk.Button(frame_top,text="📤导出解密后的文件",command=self.save_decrypted).grid(row=0,column=5,padx=3)
-        tk.Button(frame_top,text="🗑清空文本框",command=self.clear_textbox).grid(row=0,column=6,padx=3)
+        frame_top = tk.Frame(root, bg=frame_bg)
+        frame_top.pack(pady=10, padx=10, fill="x")
+        btn_font = ("Microsoft YaHei", 9)
+        tk.Button(frame_top,text="📂导入原始文件(拖拽支持)",command=self.load_file, font=btn_font, bg="#388bdd",fg="white",relief="flat").grid(row=0,column=0,padx=4,pady=4)
+        tk.Button(frame_top,text="🔒加密文件/文本",command=self.start_encrypt_thread, font=btn_font, bg="#238636",fg="white",relief="flat").grid(row=0,column=1,padx=4,pady=4)
+        tk.Button(frame_top,text="🔓解密(密文txt+密钥txt)",command=self.start_decrypt_thread, font=btn_font, bg="#9b59b6",fg="white",relief="flat").grid(row=0,column=2,padx=4,pady=4)
+        tk.Button(frame_top,text="💾导出密文txt",command=self.save_cipher, font=btn_font, bg="#e67e22",fg="white",relief="flat").grid(row=0,column=3,padx=4,pady=4)
+        tk.Button(frame_top,text="🔑导出密钥txt",command=self.save_key, font=btn_font, bg="#e67e22",fg="white",relief="flat").grid(row=0,column=4,padx=4,pady=4)
+        tk.Button(frame_top,text="📤导出解密后的文件",command=self.save_decrypted, font=btn_font, bg="#238636",fg="white",relief="flat").grid(row=0,column=5,padx=4,pady=4)
+        tk.Button(frame_top,text="🗑清空文本框",command=self.clear_textbox, font=btn_font, bg="#da3633",fg="white",relief="flat").grid(row=0,column=6,padx=4,pady=4)
 
         tip_text = f"💡可以直接在下方文本框手动输入文字加密（默认txt格式），也可以拖拽文件导入！支持格式：{', '.join(ALL_SUPPORT_EXT)}"
-        tk.Label(root, text=tip_text, fg="#206020", wraplength=960).pack()
+        tk.Label(root, text=tip_text, fg="#58a6ff", bg=bg_color, wraplength=990, font=("Microsoft YaHei",9)).pack(pady=4)
 
-        self.text_box = tk.Text(root,height=28,width=120)
-        self.text_box.pack(padx=10,pady=4)
+        # 文本编辑框美化
+        text_frame = tk.Frame(root, bg=frame_bg)
+        text_frame.pack(padx=10,pady=4,fill="both",expand=True)
+        self.text_box = tk.Text(text_frame,height=28,width=120, bg=text_bg, fg=text_fg, insertbackground="#58a6ff",font=("Consolas",10),relief="flat",bd=6)
+        self.text_box.pack(fill="both",expand=True)
         self.text_box.drop_target_register(DND_FILES)
         self.text_box.dnd_bind('<<Drop>>', self.on_file_drop)
 
         # 进度条
-        progress_frame = tk.Frame(root)
-        progress_frame.pack(fill="x",padx=10)
-        tk.Label(progress_frame,text="进度：").pack(side="left")
-        self.progress = ttk.Progressbar(progress_frame,orient=tk.HORIZONTAL,length=800,mode="determinate")
-        self.progress.pack(side="left",fill="x",expand=True)
+        progress_frame = tk.Frame(root, bg=bg_color)
+        progress_frame.pack(fill="x",padx=12,pady=6)
+        tk.Label(progress_frame,text="进度：",bg=bg_color,fg="#adbac7",font=("Microsoft YaHei",10)).pack(side="left")
+        self.progress = ttk.Progressbar(progress_frame,orient=tk.HORIZONTAL,length=800,mode="determinate",style="Custom.Horizontal.TProgressbar")
+        self.progress.pack(side="left",fill="x",expand=True,padx=6)
 
-        self.status = tk.Label(root,text="就绪，可以直接在文本框打字，或拖拽文件",fg="#333")
-        self.status.pack()
+        self.status = tk.Label(root,text="就绪，可以直接在文本框打字，或拖拽文件",fg="#3fb950",bg=bg_color,font=("Microsoft YaHei",10, "bold"))
+        self.status.pack(pady=6)
 
     def set_progress(self,val):
         self.root.after(0,lambda:self.progress.config(value=val))
@@ -251,9 +275,10 @@ class MultiFileCryptoGUI:
                 preview = f"【二进制文件】后缀:{ext}，二进制内容，无法预览"
             self.text_box.delete(1.0,tk.END)
             self.text_box.insert(tk.END,preview)
-            self.status.config(text=f"✅加载成功，文件格式：{ext}")
+            self.status.config(text=f"✅加载成功，文件格式：{ext}",fg="#3fb950")
         except Exception as e:
             messagebox.showerror("读取失败",str(e))
+            self.status.config(text="❌读取文件失败",fg="#f85149")
 
     def clear_textbox(self):
         self.text_box.delete(1.0,tk.END)
@@ -263,7 +288,7 @@ class MultiFileCryptoGUI:
         self.protected_key = ""
         self.decrypted_data = None
         self.progress["value"] = 0
-        self.status.config(text="已清空，就绪，可以手动输入文字")
+        self.status.config(text="已清空，就绪，可以手动输入文字",fg="#58a6ff")
 
     def start_encrypt_thread(self):
         if self.in_working:
@@ -281,7 +306,7 @@ class MultiFileCryptoGUI:
             return
         self.in_working = True
         self.progress["value"] = 0
-        self.status.config(text="🔄加密中，请等待...")
+        self.status.config(text="🔄加密中，请等待...",fg="#f0c860")
         def encrypt_worker():
             try:
                 fmt = self.file_format
@@ -294,10 +319,10 @@ class MultiFileCryptoGUI:
                 preview = f"====十六进制密文====\n{self.cipher_hex[:1200]}...\n\n====口令保护密钥(里面记录原始格式:{fmt})====\n{self.protected_key}"
                 self.root.after(0,lambda:self.text_box.delete(1.0,tk.END))
                 self.root.after(0,lambda:self.text_box.insert(tk.END,preview))
-                self.root.after(0,lambda:self.status.config(text="✅加密完成！导出密文txt 和密钥txt，记住口令！"))
+                self.root.after(0,lambda:self.status.config(text="✅加密完成！导出密文txt 和密钥txt，记住口令！",fg="#3fb950"))
             except Exception as e:
                 self.root.after(0,lambda:messagebox.showerror("加密失败",str(e)))
-                self.root.after(0,lambda:self.status.config(text="❌加密出错"))
+                self.root.after(0,lambda:self.status.config(text="❌加密出错",fg="#f85149"))
             finally:
                 self.in_working = False
         threading.Thread(target=encrypt_worker,daemon=True).start()
@@ -324,7 +349,7 @@ class MultiFileCryptoGUI:
             return
         self.in_working = True
         self.progress["value"] =0
-        self.status.config(text="🔄解密中，请等待...")
+        self.status.config(text="🔄解密中，请等待...",fg="#f0c860")
         def decrypt_worker():
             try:
                 data, fmt = decrypt_text_data(cipher_txt, key_txt, pwd, progress_callback=self.set_progress)
@@ -337,10 +362,10 @@ class MultiFileCryptoGUI:
                     preview = f"✅解密成功！原始二进制格式：{fmt}（二进制，无法预览）"
                 self.root.after(0,lambda:self.text_box.delete(1.0,tk.END))
                 self.root.after(0,lambda:self.text_box.insert(tk.END,preview))
-                self.root.after(0,lambda:self.status.config(text=f"✅解密完成！点击【导出解密后的文件】保存，可以修改后缀！"))
+                self.root.after(0,lambda:self.status.config(text=f"✅解密完成！点击【导出解密后的文件】保存，可以修改后缀！",fg="#3fb950"))
             except Exception as e:
                 self.root.after(0,lambda:messagebox.showerror("解密失败",str(e)))
-                self.root.after(0,lambda:self.status.config(text="❌解密出错"))
+                self.root.after(0,lambda:self.status.config(text="❌解密出错",fg="#f85149"))
             finally:
                 self.in_working = False
         threading.Thread(target=decrypt_worker,daemon=True).start()
