@@ -17,11 +17,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 安装 lw.Web2Android CLI
+      - name: 安装 lw.Web2Android CLI（固定版本v0.2.13）
         run: |
           sudo apt update
           sudo apt install -y wget unzip
-          wget https://github.com/lxw112190/lw.Web2Android/releases/latest/download/lw.Web2Android-linux-x64.zip
+          wget https://github.com/lxw112190/lw.Web2Android/releases/download/v0.2.13/lw.Web2Android-linux-x64.zip
           unzip lw.Web2Android-linux-x64.zip
 
       - name: 编译APK，禁用网络权限
