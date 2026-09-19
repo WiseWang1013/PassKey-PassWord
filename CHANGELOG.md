@@ -1,6 +1,16 @@
 # Changelog
 PassKey 版本更新日志
 
+## [v2.1.1] - Web网页 + Android APK 版本
+> ⚠️ 重大兼容性提示：v2.1.1 加密逻辑与v2.0桌面版一致，**无法兼容 v1.x 旧版本生成的密文和密钥**
+- 新增Web网页端，采用 **HTML + CSS + JavaScript** 原生前端开发，浏览器直接打开即可使用
+- 在线网页部署地址：https://wisewang1013.github.io/PassKey-PassWord/V2.1.1_WEB/index.html
+- 网页源码存放目录：`V2.1.1_WEB`，支持批量文件加解密、自定义密文/密钥文件名、实时运行日志输出
+- 支持编译两种安卓APK安装包：**离线版（移除全部网络权限）、联网版（支持密钥云端同步）**
+- APK安装包发布地址：https://github.com/WiseWang1013/PassKey-PassWord/releases
+- Web网页、安卓APK的加密算法和PC v2.0完全一致，密文、密钥跨平台互通
+- Windows桌面v2.0原有功能保持不变
+
 ## [v2.0] - Windows 正式新版
 > ⚠️ 重大兼容性提示：v2.0 采用全新加密逻辑，**无法兼容 v1.x 旧版本生成的密文和密钥**
 - 新增批量加密、批量解密功能，统一密钥管理
