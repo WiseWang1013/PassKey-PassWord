@@ -23,19 +23,21 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # ========== 替换：手动安装Android cmdline-tools，修复sdkmanager找不到tools包BUG ==========
+      # ========== 修复：更换有效的cmdline-tools下载链接 ==========
       - name: Install Android SDK Commandline Tools
         run: |
           sudo apt update && sudo apt install -y unzip
           mkdir -p $ANDROID_HOME/cmdline-tools
           cd $ANDROID_HOME/cmdline-tools
-          wget https://dl.google.com/android/repository/cmdline-tools-linux-11.0.zip
-          unzip cmdline-tools-linux-11.0.zip
+          # 版本12.0 有效官方地址
+          wget https://dl.google.com/android/repository/commandlinetools-linux-12.0_latest.zip
+          unzip commandlinetools-linux-12.0_latest.zip
+          # 解压出来文件夹名字是 cmdline-tools，重命名为 latest
           mv cmdline-tools latest
           export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
           echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
           echo "PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH" >> $GITHUB_ENV
-          # 接受协议，安装必要的android平台工具，不安装废弃的tools包
+          # 同意协议，安装打包必须组件
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
