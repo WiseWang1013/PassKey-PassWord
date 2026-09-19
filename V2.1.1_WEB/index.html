@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PassKey V2.0 WebPWA</title>
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui, -apple-system, "Microsoft YaHei"}
+body{background:#f5f5f7;color:#222;padding:12px;min-height:100vh}
+.container{max-width:1200px;margin:0 auto}
+
+/* ==========响应式核心：大屏左右，小屏上下========== */
+.wrap{display:grid;gap:16px;grid-template-columns: 300px 1fr;}
+@media (max-width:768px){
+    .wrap{grid-template-columns:1fr;}
+}
+
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 10px #00000012}
+h2{margin-bottom:16px;font-size:20px}
+h3{margin:10px 0 8px;font-size:17px}
+button{width:100%;padding:14px;margin:6px 0;border:none;border-radius:10px;font-size:16px;touch-action:manipulation;cursor:pointer}
+.btn-green{background:#27ae60;color:#fff}
+.btn-blue{background:#2563eb;color:#fff}
+.btn-purple{background:#9b59b6;color:#fff}
+.btn-orange{background:#e67e22;color:#fff}
+.btn-red{background:#e74c3c;color:#fff}
+.btn-gray{background:#606870;color:#fff}
+input[type="file"]{width:100%;margin:8px 0}
+#fileList{background:#f3f4f6;padding:10px;border-radius:8px;min-height:80px;margin:8px 0;font-size:14px}
+#status{margin:12px 0;padding:10px;border-radius:8px;background:#edf2fb}
+#progressOuter{width:100%;height:12px;background:#ddd;border-radius:99px;margin:8px 0}
+#progressBar{height:100%;width:0%;background:#2563eb;border-radius:99px;transition:0.15s}
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>🔐 PassKey V2.0 WebPWA 批量加解密</h2>
+    <div class="wrap">
+        <!--左侧操作面板，手机会自动跑到上面-->
+        <div class="card">
+            <h3>📤 加密</h3>
+            <input type="file" id="encFileInput" multiple>
+            <div id="fileList">未选择文件</div>
+            <label><input type="checkbox" id="useRandomKey" checked>随机密钥(推荐)</label>
+            <button class="btn-green" onclick="startEncrypt()">开始批量加密</button>
+
+            <hr style="margin:20px 0">
+            <h3>📥 解密</h3>
+            <p>选择密文包txt（名字可自定义）</p>
+            <input type="file" id="cipherFile" accept=".txt">
+            <p>选择密钥txt（名字可自定义）</p>
+            <input type="file" id="keyFile" accept=".txt">
+            <button class="btn-purple" onclick="startDecrypt()">开始批量解密</button>
+        </div>
+        <!--右侧信息面板，手机自动到下方-->
+        <div class="card">
+            <h3>状态与日志</h3>
+            <div id="progressOuter"><div id="progressBar"></div></div>
+            <div id="status">就绪，可选择文件进行加密解密。<br>✅支持自定义密文/密钥文件名，导入不限制文件名</div>
+        </div>
+    </div>
+</div>
+
+<script src="crypto.js"></script>
+<script>
+let selectedFiles = [];
+let decryptResultFiles = [];
+
+const encInput = document.getElementById("encFileInput");
+encInput.onchange = e=>{
+    selectedFiles = Array.from(e.target.files);
+    document.getElementById("fileList").innerText = `已选：${selectedFiles.map(f=>f.name).join("；")}`;
+    setStatus("已加载待加密文件");
+}
+
+function setStatus(text){
+    document.getElementById("status").innerHTML = text;
+}
+function setProgress(percent){
+    document.getElementById("progressBar").style.width = percent+"%";
+}
+
+async function startEncrypt(){
+    if(!selectedFiles.length){
+        setStatus("⚠️请先选择待加密文件");
+        return;
+    }
+    const pwd = prompt("设置加密口令，留空直接确定=无密码","");
+    if(pwd === null) return;
+    const useRandomKey = document.getElementById("useRandomKey").checked;
+    setStatus("⏳加密运算中...");
+    setProgress(0);
+    try{
+        const res = await batchEncryptFiles(selectedFiles, pwd, useRandomKey);
+        // 弹窗自定义文件名
+        downloadTextFile(res.cipherPackageText, "cipher.txt");
+        downloadTextFile(res.protectedKeyText, "key.txt");
+        setStatus("✅加密完成！已弹出保存窗口，可自定义密文包、密钥文件名");
+        setProgress(100);
+    }catch(err){
+        setStatus("❌加密失败："+err);
+    }
+}
+
+async function startDecrypt(){
+    const cipherFileObj = document.getElementById("cipherFile").files[0];
+    const keyFileObj = document.getElementById("keyFile").files[0];
+    if(!cipherFileObj || !keyFileObj){
+        setStatus("⚠️请选择密文包txt 和 密钥txt（文件名任意）");
+        return;
+    }
+    const cipherText = await cipherFileObj.text();
+    const keyText = await keyFileObj.text();
+    const pwd = prompt("输入加密口令，无密码直接确定","");
+    if(pwd === null) return;
+    setStatus("⏳解密中...");
+    setProgress(0);
+    try{
+        decryptResultFiles = await batchDecryptFiles(cipherText, keyText, pwd);
+        setStatus(`✅解密成功，共${decryptResultFiles.length}个文件。逐个下载原始文件`);
+        setProgress(100);
+        // 批量下载全部解密文件
+        for(const f of decryptResultFiles){
+            downloadBinaryFile(f.data, f.name);
+        }
+    }catch(err){
+        setStatus("❌解密失败："+err);
+    }
+}
+</script>
+</body>
+</html>
