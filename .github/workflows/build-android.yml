@@ -1,0 +1,28 @@
+name: Build PassKey Android APK
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # 支持手动点击按钮触发打包
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库源码
+        uses: actions/checkout@v4
+
+      - name: 配置Java环境
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 编译安卓APK
+        uses: lxw112190/web2android-build-action@v0.2.7
+        with:
+          source_dir: ./V2.1.1_WEB
+          app_name: "PassKey 通行密钥"
+          package_name: com.wisewang1013.passkey
+          version_name: 2.1.1
+          version_code: 211
+          no_internet: true
