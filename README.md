@@ -4,7 +4,7 @@
 
 > ⚠️ **版本重大警告：V2.0 / v2.1.1 不兼容 v1.0 ~ v1.1.1‑beta 的旧密文、旧密钥！旧版本加密的文件无法使用V2.0及v2.1.1解密。**
 
-> 🔗 **镜像仓库（Gitee国内加速）：[Gitee PassKey 国内镜像](https://gitee.com/WiseWang1013/PassKey-PassWord)**
+> 🔗 **国内镜像仓库(Gitee)：[Gitee‑PassKey‑PassWord](https://gitee.com/WiseWang1013/PassKey-PassWord)**
 
 **✅ 当前最新版本：v2.1.1（Web网页 + Android APK 新增版）**
 **✅ Windows桌面正式版本：v2.0（批量加密新版）**
@@ -27,7 +27,7 @@
 - **统一异或加密**：不再区分文件后缀专属加密策略，支持几乎全部Windows文件格式
 - **大文件多文件进度显示**：加密解密实时展示子任务进度
 - **无密码加密**：支持口令留空，不设置密码保护
-- **加密模式选择**：随机安全密钥（推荐） / 固定测试密钥（仅调试使用）
+- **加密模式选择**：随机安全密钥(推荐) / 固定测试密钥（仅调试使用）
 - **纯白简约全新UI**：左侧操作面板，右侧预览区域
 - **使用协议弹窗**：内置版权、免责、版本说明弹窗
 - **批量导出解密文件**：自动保留原始文件名与后缀格式
@@ -50,7 +50,7 @@
 👉 [PassKey v2.1.1 Web在线工具](https://wisewang1013.github.io/PassKey-PassWord/V2.1.1_WEB/index.html)
 
 > 网页源码可编译打包为**安卓离线APK** 和 **安卓联网APK**两个版本；网页本身可直接作为Windows浏览器联网版使用。
-> 编译完成的APK安装包，后续会发布到Release页面：👉 [Release发布页](https://github.com/WiseWang1013/PassKey-PassWord/releases)
+> 编译完成的APK安装包，后续会发布到Release页面：👉 [GitHub Release发布页](https://github.com/WiseWang1013/PassKey-PassWord/releases)
 
 ### 版本区分
 1. **Windows网页联网版（浏览器直接打开）**
@@ -94,10 +94,10 @@
 
 ## 📦 运行环境依赖
 Python 3.8 及以上
-```bash
 pip install tkinterdnd2 pyinstaller
 Linux /macOS 平台请查看对应 v1.1.1‑beta 版本内 README 安装平台专属依赖，v2.0 桌面版暂不支持 Linux/macOS。
-🔨 打包教程
+
+## 🔨 打包教程
 Windows（打包独立 EXE，v2.0 桌面版）
 安装全部依赖库
 直接双击运行 build.bat
@@ -105,7 +105,8 @@ Windows（打包独立 EXE，v2.0 桌面版）
 ✅ 打包成果：单文件 EXE、带自定义图标、拖拽功能正常可用
 ⚠️ Linux /macOS：v2.0 桌面版没有适配；v1.1.1‑beta 分支不能 Windows 交叉编译，请在对应系统内本地编译。
 📱 Android 打包：使用仓库内 GitHub Actions CI 脚本，自动从 V2.1.1_WEB 网页源码编译离线 APK / 联网 APK。
-📖 v2.0 完整使用说明（桌面 GUI 版）
+
+## 📖 v2.0 完整使用说明（桌面 GUI 版）
 运行 PassKey.py 启动软件
 批量导入文件：点击【多选待加密文件】，或者直接把文件拖拽进窗口左侧列表。
 批量加密
@@ -121,7 +122,8 @@ v2.0/v2.1.1 生成的密文包 txt
 v2.0/v2.1.1 生成的统一密钥 txt
 加密时设置的通行口令
 ❗ 无法解密 v1.x 版本生成的密文密钥。
-⚠️ 重要安全提醒（必读）
+
+## ⚠️ 重要安全提醒（必读）
 通行口令一旦丢失、遗忘，文件永久无法解密，没有找回手段！
 本项目仅用于 Python 编程学习、开源练习。
 v2.0 桌面版优先适配 Windows 平台；Linux、macOS 仅可使用旧 v1.1.1‑beta 源码，没有 v2 版本。
@@ -129,6 +131,7 @@ v2.1.1 Web 网页版、安卓 APK（离线 / 联网）加密算法同 v2.0 桌�
 禁止用来加密重要业务、机密资料，重要文件务必备份原始文件。
 安卓 APK 为测试构建包，离线版无网络权限；联网版会支持密钥云端存储。
 禁止利用本工具做恶意加密、锁机、勒索等一切违规违法行为。
-📜 开源说明
+
+## 📜 开源说明
 本项目采用 MIT 开源协议，仅供学习、参考、二次练习。
 任何人都可以查看、学习、修改源码，但禁止商用违规用途。
