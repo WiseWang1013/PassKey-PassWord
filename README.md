@@ -4,7 +4,7 @@
 
 > ⚠️ **版本重大警告：V2.0 / v2.1.1 不兼容 v1.0 ~ v1.1.1‑beta 的旧密文、旧密钥！旧版本加密的文件无法使用V2.0及v2.1.1解密。**
 
-> 🔗 **镜像仓库（Gitee国内加速）：[Gitee PassKey 国内镜像](https://gitee.com/wangzhihan/PassKey)**
+> 🔗 **镜像仓库（Gitee国内加速）：[Gitee PassKey 国内镜像](https://gitee.com/WiseWang1013/PassKey-PassWord)**
 
 **✅ 当前最新版本：v2.1.1（Web网页 + Android APK 新增版）**
 **✅ Windows桌面正式版本：v2.0（批量加密新版）**
