@@ -81,8 +81,8 @@
 - [`v1.1.1‑beta‑for‑Linux/`](https://github.com/WiseWang1013/PassKey-PassWord/tree/main/v1.1.1-beta-for-Linux) 📂 Linux专属Beta源码版本（基于v1.1.1，**不包含v2.0/v2.1.1新功能**）
 - [`v1.1.1‑beta‑for‑Mac/`](https://github.com/WiseWang1013/PassKey-PassWord/tree/main/v1.1.1-beta-for-Mac) 📂 macOS专属Beta源码版本（基于v1.1.1，**不包含v2.0/v2.1.1新功能**）
 
-👉 [Linux Beta版本 v1.1.1‑beta‑for‑Linux](./v1.1.1_beta_for_Linux/README.md)
-👉 [macOS Beta版本 v1.1.1‑beta‑for‑Mac](./v1.1.1_beta_for_Mac/README.md)
+👉 [Linux Beta版本 v1.1.1‑beta‑for‑Linux](./v1.1.1_beta-for-Linux/README.md)
+👉 [macOS Beta版本 v1.1.1‑beta‑for‑Mac](./v1.1.1-beta-for-Mac/README.md)
 
 ## 📄 项目配套文档
 - [版本更新日志 CHANGELOG.md](./CHANGELOG.md)
