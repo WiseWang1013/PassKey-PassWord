@@ -4,7 +4,8 @@
 
 > ⚠️ **版本重大警告：V2.0 / v2.1.1 不兼容 v1.0 ~ v1.1.1‑beta 的旧密文、旧密钥！旧版本加密的文件无法使用V2.0及v2.1.1解密。**
 
-> 🔗 **国内镜像仓库(Gitee)：[Gitee‑PassKey‑PassWord](https://gitee.com/WiseWang1013/PassKey-PassWord)**
+> 🔗 **国内完整镜像仓库(Gitee)：[Gitee‑PassKey‑PassWord](https://gitee.com/WiseWang1013/PassKey-PassWord)**
+> 📱 Android 安卓离线版源码存放于Gitee仓库 `PasskyForAndroid` 文件夹，GitHub不再存放安卓MAUI源码，仅提供编译好的APK安装包。
 
 **✅ 当前最新版本：v2.1.1（Web网页 + Android APK 新增版）**
 **✅ Windows桌面正式版本：v2.0（批量加密新版）**
@@ -45,6 +46,9 @@
 
 ## 🌐 Web网页版 & 📱 Android APK
 > Web网页源码存放目录：[`V2.1.1_WEB`](https://github.com/WiseWang1013/PassKey-PassWord/tree/main/V2.1.1_WEB)，采用 **HTML + CSS + JavaScript** 原生前端开发，全部加解密运算在浏览器本地执行，加密逻辑和PC v2.0保持一致，密文、密钥双向互通。
+>
+> 📱 **Android MAUI源码移步Gitee仓库：[Gitee PasskyForAndroid](https://gitee.com/WiseWang1013/PassKey-PassWord/tree/master/PasskyForAndroid)**
+> GitHub仅发布编译完成的APK安装包，源码请到国内Gitee查看。
 
 **🚀 在线直接使用网页版：**
 👉 [PassKey v2.1.1 Web在线工具](https://wisewang1013.github.io/PassKey-PassWord/V2.1.1_WEB/index.html)
@@ -80,6 +84,7 @@
 - [`v1.0/`](https://github.com/WiseWang1013/PassKey-PassWord/tree/main/v1.0)：历史原版源码文件夹（保留初代版本）
 - [`v1.1.1‑beta‑for‑Linux/`](https://github.com/WiseWang1013/PassKey-PassWord/tree/main/v1.1.1-beta-for-Linux) 📂 Linux专属Beta源码版本（基于v1.1.1，**不包含v2.0/v2.1.1新功能**）
 - [`v1.1.1‑beta‑for‑Mac/`](https://github.com/WiseWang1013/PassKey-PassWord/tree/main/v1.1.1-beta-for-Mac) 📂 macOS专属Beta源码版本（基于v1.1.1，**不包含v2.0/v2.1.1新功能**）
+> 📱 Android MAUI源码：移步Gitee仓库 `PasskyForAndroid`
 
 👉 [Linux Beta版本 v1.1.1‑beta‑for‑Linux](./v1.1.1_beta-for-Linux/README.md)
 👉 [macOS Beta版本 v1.1.1‑beta‑for‑Mac](./v1.1.1-beta-for-Mac/README.md)
@@ -104,7 +109,7 @@ Windows（打包独立 EXE，v2.0 桌面版）
 打包完成，程序输出在 dist 文件夹
 ✅ 打包成果：单文件 EXE、带自定义图标、拖拽功能正常可用
 ⚠️ Linux /macOS：v2.0 桌面版没有适配；v1.1.1‑beta 分支不能 Windows 交叉编译，请在对应系统内本地编译。
-📱 Android 打包：使用仓库内 GitHub Actions CI 脚本，自动从 V2.1.1_WEB 网页源码编译离线 APK / 联网 APK。
+📱 Android 打包：MAUI源码在Gitee，可本地编译APK；GitHub Release直接下载成品APK。
 
 ## 📖 v2.0 完整使用说明（桌面 GUI 版）
 运行 PassKey.py 启动软件
